@@ -7,11 +7,13 @@ import DataExportImport from './components/DataExportImport'
 import useEntries from './hooks/useEntries'
 import useDreams from './hooks/useDreams'
 import useToast from './hooks/useToast'
+import useTheme from './hooks/useTheme'
 
 export default function App() {
   const { entries, addEntry, editEntry, deleteEntry, undoDeleteEntry, importEntries } = useEntries()
   const { dreams, addDream, editDream, deleteDream, undoDeleteDream, deposit, importDreams } = useDreams()
   const { toast, showToast, dismissToast } = useToast()
+  const { theme, toggleTheme } = useTheme()
 
   const handleDeleteEntry = (id) => {
     deleteEntry(id)
@@ -36,8 +38,8 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-cream px-4 py-8 md:px-8 lg:px-12">
-      <Header />
+    <div className="min-h-screen bg-cream dark:bg-[#1a1a2e] px-4 py-8 md:px-8 lg:px-12 transition-colors duration-300">
+      <Header theme={theme} onToggleTheme={toggleTheme} />
       <div className="max-w-7xl mx-auto mb-4 flex justify-end">
         <DataExportImport onImport={handleImport} />
       </div>

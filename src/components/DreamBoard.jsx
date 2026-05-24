@@ -11,16 +11,16 @@ export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit, onEdit 
   }
 
   return (
-    <section className="bg-white rounded-[2rem] shadow-lg shadow-mint/10 p-8 flex flex-col">
+    <section className="bg-white dark:bg-gray-800 rounded-[2rem] shadow-lg shadow-mint/10 dark:shadow-none p-6 sm:p-8 flex flex-col">
       <div className="flex items-center justify-between mb-1">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
           我的梦想进度条
         </h2>
         <button
           onClick={() => setShowAddDream(v => !v)}
           className={`w-9 h-9 flex items-center justify-center rounded-full text-lg font-bold transition-all duration-200 active:scale-90
             ${showAddDream
-              ? 'bg-gray-200 text-gray-500 rotate-45'
+              ? 'bg-gray-200 dark:bg-gray-600 text-gray-500 dark:text-gray-400 rotate-45'
               : 'bg-gradient-to-r from-amber-400 to-orange text-white shadow-md hover:shadow-lg hover:shadow-orange/20'
             }
           `}
@@ -28,7 +28,7 @@ export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit, onEdit 
           +
         </button>
       </div>
-      <p className="text-gray-400 text-sm mb-4">
+      <p className="text-gray-400 dark:text-gray-500 text-sm mb-4">
         每一个梦想都值得被认真对待
       </p>
 
@@ -39,8 +39,13 @@ export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit, onEdit 
       <div className="flex-1 space-y-5 overflow-y-auto" style={{ maxHeight: '520px' }}>
         {dreams.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-4xl mb-3">🐷</p>
-            <p className="text-gray-400 text-sm">还没有梦想，点击 + 创建一个吧</p>
+            <p className="text-5xl mb-4">🌟</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-1">
+              还没有梦想
+            </p>
+            <p className="text-gray-400 dark:text-gray-500 text-xs">
+              点击右上角 + 创建你的第一个梦想吧
+            </p>
           </div>
         )}
         {dreams.map((dream, idx) => (
@@ -55,8 +60,8 @@ export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit, onEdit 
         ))}
       </div>
 
-      <div className="mt-6 p-4 bg-gradient-to-r from-amber-50 to-mint/20 rounded-2xl text-center">
-        <p className="text-sm text-gray-600">
+      <div className="mt-6 p-4 bg-gradient-to-r from-amber-50 to-mint/20 dark:from-gray-700/50 dark:to-gray-700/30 rounded-2xl text-center">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           每一步都在靠近梦想，今天的努力会成为明天的礼物 💪
         </p>
       </div>

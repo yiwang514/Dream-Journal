@@ -8,7 +8,7 @@ export default function Toast({ message, onUndo, onDismiss, duration = 5000 }) {
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-slide-up">
-      <div className="bg-gray-800 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-4">
+      <div className="bg-gray-800 dark:bg-gray-700 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-4">
         <span className="text-sm">{message}</span>
         {onUndo && (
           <button

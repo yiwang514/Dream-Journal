@@ -12,6 +12,11 @@ body {
   margin: 0;
   background-color: #FFFAF0;
   min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.dark body {
+  background-color: #1a1a2e;
 }
 
 /* Custom scrollbar */
@@ -27,6 +32,12 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #FFB74D;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #4a4a6a;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #5a5a7a;
 }
 
 @keyframes float {
