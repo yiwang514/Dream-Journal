@@ -4,13 +4,7 @@ import type { Entry } from '../types'
 
 const ENTRIES_KEY = 'dream-journal-entries'
 
-const PRESET_ENTRIES: Entry[] = [
-  { id: 1, text: '今天坚持晨跑 30 分钟，流汗的感觉真好！🏃', time: '2026-05-18 07:30' },
-  { id: 2, text: '完成了一直拖延的工作汇报 PPT，迈出了第一步！📝', time: '2026-05-17 21:15' },
-  { id: 3, text: '给妈妈打了一通电话，她笑得很开心。📞', time: '2026-05-17 18:00' },
-  { id: 4, text: '今天学会了做一道新菜——番茄牛腩，超好吃！🍲', time: '2026-05-16 19:20' },
-  { id: 5, text: '主动帮助同事解决了一个技术问题，被感谢了。🤝', time: '2026-05-15 14:00' },
-]
+const PRESET_ENTRIES: Entry[] = []
 
 export default function useEntries() {
   const [entries, setEntries] = useLocalStorage<Entry[]>(ENTRIES_KEY, PRESET_ENTRIES)
