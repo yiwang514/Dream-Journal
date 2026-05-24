@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/Dream-Journal/sw.js', { scope: '/Dream-Journal/' })})}
