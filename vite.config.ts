@@ -47,6 +47,7 @@ export default defineConfig({
       },
     }),
   ],
+  base: '/Dream-Journal/',
   test: {
     globals: true,
     environment: 'jsdom',
