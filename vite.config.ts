@@ -25,7 +25,7 @@ export default defineConfig({
         theme_color: '#FFFAF0',
         background_color: '#FFFAF0',
         display: 'standalone',
-        start_url: '/',
+        start_url: '/Dream-Journal/',
         icons: [
           {
             src: 'pwa-192x192.png',
