@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { fireConfetti } from '../utils/confetti'
 import JournalEntry from './JournalEntry'
 
-export default function SuccessJournal({ entries, onAdd, onDelete }) {
+export default function SuccessJournal({ entries, onAdd, onDelete, onEdit }) {
   const [newEntry, setNewEntry] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -71,6 +71,7 @@ export default function SuccessJournal({ entries, onAdd, onDelete }) {
               entry={entry}
               index={idx}
               onDelete={onDelete}
+              onEdit={onEdit}
             />
           ))}
           {entries.length === 0 && (

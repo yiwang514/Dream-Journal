@@ -47,6 +47,7 @@ const COLOR_PALETTE = [
 export default function useDreams() {
   const [dreams, setDreams] = useLocalStorage(DREAMS_KEY, PRESET_DREAMS)
   const colorIdxRef = useRef(0)
+  const deletedRef = useRef(null)
 
   const addDream = useCallback((name, target) => {
     const color = COLOR_PALETTE[colorIdxRef.current % COLOR_PALETTE.length]
@@ -63,8 +64,23 @@ export default function useDreams() {
     return dream
   }, [setDreams])
 
+  const editDream = useCallback((id, updates) => {
+    setDreams(prev => prev.map(d => d.id === id ? { ...d, ...updates } : d))
+  }, [setDreams])
+
   const deleteDream = useCallback((id) => {
-    setDreams(prev => prev.filter(d => d.id !== id))
+    setDreams(prev => {
+      const dream = prev.find(d => d.id === id)
+      deletedRef.current = dream
+      return prev.filter(d => d.id !== id)
+    })
+  }, [setDreams])
+
+  const undoDeleteDream = useCallback(() => {
+    if (!deletedRef.current) return
+    const dream = deletedRef.current
+    deletedRef.current = null
+    setDreams(prev => [...prev, dream])
   }, [setDreams])
 
   const deposit = useCallback((dreamId, amount) => {
@@ -76,5 +92,9 @@ export default function useDreams() {
     )
   }, [setDreams])
 
-  return { dreams, addDream, deleteDream, deposit }
+  const importDreams = useCallback((data) => {
+    setDreams(data)
+  }, [setDreams])
+
+  return { dreams, addDream, editDream, deleteDream, undoDeleteDream, deposit, importDreams }
 }

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import useLocalStorage from './useLocalStorage'
 
 const ENTRIES_KEY = 'dream-journal-entries'
@@ -13,6 +13,7 @@ const PRESET_ENTRIES = [
 
 export default function useEntries() {
   const [entries, setEntries] = useLocalStorage(ENTRIES_KEY, PRESET_ENTRIES)
+  const deletedRef = useRef(null)
 
   const addEntry = useCallback((text) => {
     const entry = {
@@ -30,9 +31,28 @@ export default function useEntries() {
     return entry
   }, [setEntries])
 
-  const deleteEntry = useCallback((id) => {
-    setEntries(prev => prev.filter(e => e.id !== id))
+  const editEntry = useCallback((id, newText) => {
+    setEntries(prev => prev.map(e => e.id === id ? { ...e, text: newText } : e))
   }, [setEntries])
 
-  return { entries, addEntry, deleteEntry }
+  const deleteEntry = useCallback((id) => {
+    setEntries(prev => {
+      const entry = prev.find(e => e.id === id)
+      deletedRef.current = entry
+      return prev.filter(e => e.id !== id)
+    })
+  }, [setEntries])
+
+  const undoDeleteEntry = useCallback(() => {
+    if (!deletedRef.current) return
+    const entry = deletedRef.current
+    deletedRef.current = null
+    setEntries(prev => [entry, ...prev])
+  }, [setEntries])
+
+  const importEntries = useCallback((data) => {
+    setEntries(data)
+  }, [setEntries])
+
+  return { entries, addEntry, editEntry, deleteEntry, undoDeleteEntry, importEntries }
 }

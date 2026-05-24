@@ -2,7 +2,7 @@ import { useState } from 'react'
 import AddDreamForm from './AddDreamForm'
 import DreamCard from './DreamCard'
 
-export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit }) {
+export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit, onEdit }) {
   const [showAddDream, setShowAddDream] = useState(false)
 
   const handleAddDream = (name, target) => {
@@ -50,6 +50,7 @@ export default function DreamBoard({ dreams, onAdd, onDelete, onDeposit }) {
             index={idx}
             onDeposit={onDeposit}
             onDelete={onDelete}
+            onEdit={onEdit}
           />
         ))}
       </div>

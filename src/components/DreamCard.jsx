@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-export default function DreamCard({ dream, index, onDeposit, onDelete }) {
+export default function DreamCard({ dream, index, onDeposit, onDelete, onEdit }) {
   const [depositAmount, setDepositAmount] = useState('')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editName, setEditName] = useState(dream.name)
+  const [editTarget, setEditTarget] = useState(String(dream.target))
+  const nameRef = useRef(null)
+
+  useEffect(() => {
+    if (isEditing && nameRef.current) {
+      nameRef.current.focus()
+    }
+  }, [isEditing])
 
   const progress = Math.round((dream.saved / dream.target) * 100)
   const isComplete = progress >= 100
@@ -13,6 +23,20 @@ export default function DreamCard({ dream, index, onDeposit, onDelete }) {
     if (!amount || amount <= 0 || isComplete) return
     onDeposit(dream.id, amount)
     setDepositAmount('')
+  }
+
+  const handleSaveEdit = () => {
+    const name = editName.trim()
+    const target = parseFloat(editTarget)
+    if (!name || !target || target <= 0) return
+    onEdit(dream.id, { name, target })
+    setIsEditing(false)
+  }
+
+  const handleCancelEdit = () => {
+    setEditName(dream.name)
+    setEditTarget(String(dream.target))
+    setIsEditing(false)
   }
 
   return (
@@ -51,14 +75,59 @@ export default function DreamCard({ dream, index, onDeposit, onDelete }) {
         </div>
       )}
 
-      <div className="flex items-center justify-between mb-3 pr-8">
-        <h3 className="font-bold text-gray-800 text-lg">{dream.name}</h3>
-        {isComplete && (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full animate-bounce-in">
-            已达成 🎉
-          </span>
-        )}
-      </div>
+      {isEditing ? (
+        <div className="mb-3 pr-8">
+          <input
+            ref={nameRef}
+            type="text"
+            value={editName}
+            onChange={(e) => setEditName(e.target.value)}
+            className="w-full px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 text-sm outline-none focus:border-orange/50 mb-2"
+            placeholder="梦想名称"
+          />
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400 text-sm">¥</span>
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={editTarget}
+              onChange={(e) => setEditTarget(e.target.value)}
+              className="flex-1 px-3 py-2 rounded-xl border border-gray-200 bg-white text-gray-700 text-sm outline-none focus:border-orange/50"
+              placeholder="目标金额"
+            />
+          </div>
+          <div className="flex gap-2 mt-2 justify-end">
+            <button
+              onClick={handleCancelEdit}
+              className="px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              取消
+            </button>
+            <button
+              onClick={handleSaveEdit}
+              className="px-3 py-1 text-xs font-semibold bg-orange text-white rounded-lg hover:opacity-90 transition-colors"
+            >
+              保存
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between mb-3 pr-8">
+          <h3
+            className="font-bold text-gray-800 text-lg cursor-pointer hover:text-gray-600"
+            onClick={() => setIsEditing(true)}
+            title="点击编辑"
+          >
+            {dream.name}
+          </h3>
+          {isComplete && (
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full animate-bounce-in">
+              已达成 🎉
+            </span>
+          )}
+        </div>
+      )}
 
       <div className="flex justify-between items-baseline mb-3">
         <div>

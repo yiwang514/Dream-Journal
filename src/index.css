@@ -37,3 +37,12 @@ body {
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }
+
+@keyframes slideUp {
+  from { transform: translate(-50%, 20px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
