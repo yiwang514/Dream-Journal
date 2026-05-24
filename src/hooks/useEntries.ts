@@ -1,9 +1,10 @@
-import { useState, useCallback, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import useLocalStorage from './useLocalStorage'
+import type { Entry } from '../types'
 
 const ENTRIES_KEY = 'dream-journal-entries'
 
-const PRESET_ENTRIES = [
+const PRESET_ENTRIES: Entry[] = [
   { id: 1, text: '今天坚持晨跑 30 分钟，流汗的感觉真好！🏃', time: '2026-05-18 07:30' },
   { id: 2, text: '完成了一直拖延的工作汇报 PPT，迈出了第一步！📝', time: '2026-05-17 21:15' },
   { id: 3, text: '给妈妈打了一通电话，她笑得很开心。📞', time: '2026-05-17 18:00' },
@@ -12,11 +13,11 @@ const PRESET_ENTRIES = [
 ]
 
 export default function useEntries() {
-  const [entries, setEntries] = useLocalStorage(ENTRIES_KEY, PRESET_ENTRIES)
-  const deletedRef = useRef(null)
+  const [entries, setEntries] = useLocalStorage<Entry[]>(ENTRIES_KEY, PRESET_ENTRIES)
+  const deletedRef = useRef<Entry | null>(null)
 
-  const addEntry = useCallback((text) => {
-    const entry = {
+  const addEntry = useCallback((text: string) => {
+    const entry: Entry = {
       id: Date.now(),
       text,
       time: new Date().toLocaleString('zh-CN', {
@@ -31,14 +32,14 @@ export default function useEntries() {
     return entry
   }, [setEntries])
 
-  const editEntry = useCallback((id, newText) => {
+  const editEntry = useCallback((id: number, newText: string) => {
     setEntries(prev => prev.map(e => e.id === id ? { ...e, text: newText } : e))
   }, [setEntries])
 
-  const deleteEntry = useCallback((id) => {
+  const deleteEntry = useCallback((id: number) => {
     setEntries(prev => {
       const entry = prev.find(e => e.id === id)
-      deletedRef.current = entry
+      deletedRef.current = entry || null
       return prev.filter(e => e.id !== id)
     })
   }, [setEntries])
@@ -50,7 +51,7 @@ export default function useEntries() {
     setEntries(prev => [entry, ...prev])
   }, [setEntries])
 
-  const importEntries = useCallback((data) => {
+  const importEntries = useCallback((data: Entry[]) => {
     setEntries(data)
   }, [setEntries])
 

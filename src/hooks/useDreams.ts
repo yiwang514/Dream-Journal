@@ -1,9 +1,10 @@
 import { useCallback, useRef } from 'react'
 import useLocalStorage from './useLocalStorage'
+import type { Dream } from '../types'
 
 const DREAMS_KEY = 'dream-journal-dreams'
 
-const PRESET_DREAMS = [
+const PRESET_DREAMS: Dream[] = [
   {
     id: 1,
     name: '买一把吉他 🎸',
@@ -45,15 +46,15 @@ const COLOR_PALETTE = [
 ]
 
 export default function useDreams() {
-  const [dreams, setDreams] = useLocalStorage(DREAMS_KEY, PRESET_DREAMS)
+  const [dreams, setDreams] = useLocalStorage<Dream[]>(DREAMS_KEY, PRESET_DREAMS)
   const colorIdxRef = useRef(0)
-  const deletedRef = useRef(null)
+  const deletedRef = useRef<Dream | null>(null)
 
-  const addDream = useCallback((name, target) => {
+  const addDream = useCallback((name: string, target: number) => {
     const color = COLOR_PALETTE[colorIdxRef.current % COLOR_PALETTE.length]
     colorIdxRef.current += 1
 
-    const dream = {
+    const dream: Dream = {
       id: Date.now(),
       name,
       target,
@@ -64,14 +65,14 @@ export default function useDreams() {
     return dream
   }, [setDreams])
 
-  const editDream = useCallback((id, updates) => {
+  const editDream = useCallback((id: number, updates: Partial<Pick<Dream, 'name' | 'target'>>) => {
     setDreams(prev => prev.map(d => d.id === id ? { ...d, ...updates } : d))
   }, [setDreams])
 
-  const deleteDream = useCallback((id) => {
+  const deleteDream = useCallback((id: number) => {
     setDreams(prev => {
       const dream = prev.find(d => d.id === id)
-      deletedRef.current = dream
+      deletedRef.current = dream || null
       return prev.filter(d => d.id !== id)
     })
   }, [setDreams])
@@ -83,7 +84,7 @@ export default function useDreams() {
     setDreams(prev => [...prev, dream])
   }, [setDreams])
 
-  const deposit = useCallback((dreamId, amount) => {
+  const deposit = useCallback((dreamId: number, amount: number) => {
     if (!amount || amount <= 0) return
     setDreams(prev =>
       prev.map(d =>
@@ -92,7 +93,7 @@ export default function useDreams() {
     )
   }, [setDreams])
 
-  const importDreams = useCallback((data) => {
+  const importDreams = useCallback((data: Dream[]) => {
     setDreams(data)
   }, [setDreams])
 

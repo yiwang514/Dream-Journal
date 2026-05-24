@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 
+type Theme = 'light' | 'dark'
+
 export default function useTheme() {
-  const [theme, setTheme] = useState(() => {
+  const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('dream-journal-theme') || 'light'
+      return (localStorage.getItem('dream-journal-theme') as Theme) || 'light'
     }
     return 'light'
   })
