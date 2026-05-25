@@ -18,6 +18,11 @@ export default function useTheme() {
       root.classList.remove('dark')
     }
     localStorage.setItem('dream-journal-theme', theme)
+
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (meta) {
+      meta.setAttribute('content', theme === 'dark' ? '#1e1a3a' : '#FFFAF0')
+    }
   }, [theme])
 
   const toggleTheme = () => {

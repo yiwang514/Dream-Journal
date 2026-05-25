@@ -37,47 +37,56 @@ export default function StatsPage() {
     return sorted.slice(0, 7)
   }, [entries])
 
+  const statCards = [
+    { label: '日记总数', value: totalEntries, color: 'from-orange to-rose-400', shadow: 'shadow-orange/15' },
+    { label: '梦想完成率', value: `${completionRate}%`, color: 'from-mint to-emerald-400', shadow: 'shadow-mint/15' },
+    { label: '已储蓄', value: `¥${totalSaved.toLocaleString()}`, color: 'from-amber-400 to-orange', shadow: 'shadow-amber/15' },
+    { label: '目标总额', value: `¥${totalTarget.toLocaleString()}`, color: 'from-dusk-400 to-violet-500', shadow: 'shadow-violet/15' },
+  ]
+
   return (
-    <div className="min-h-screen bg-cream dark:bg-[#1a1a2e] px-4 py-8 md:px-8 lg:px-12 transition-colors duration-300">
+    <div className="relative z-10 min-h-screen px-4 py-8 md:px-8 lg:px-12">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-8 animate-fade-in-up">
           <button
             onClick={() => navigate('/')}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all"
+            className="glass-subtle w-10 h-10 flex items-center justify-center rounded-full shadow-sm hover:shadow-md transition-all duration-300 active:scale-90 hover:-translate-y-0.5"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="text-gray-600 dark:text-gray-300">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
           </button>
-          <h1 className="text-3xl font-extrabold text-gray-800 dark:text-gray-100">
-            数据统计 📊
-          </h1>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-800 dark:text-gray-100" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
+              数据统计
+            </h1>
+            <div className="h-0.5 mt-1 w-16 bg-gradient-to-r from-orange to-mint dark:from-dusk-400 dark:to-violet-400 rounded-full" />
+          </div>
         </div>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm">
-            <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">日记总数</p>
-            <p className="text-3xl font-extrabold text-orange">{totalEntries}</p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm">
-            <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">梦想完成率</p>
-            <p className="text-3xl font-extrabold text-mint">{completionRate}%</p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm">
-            <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">已储蓄</p>
-            <p className="text-3xl font-extrabold text-amber-500">¥{totalSaved.toLocaleString()}</p>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm">
-            <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">目标总额</p>
-            <p className="text-3xl font-extrabold text-violet-500">¥{totalTarget.toLocaleString()}</p>
-          </div>
+          {statCards.map((card, i) => (
+            <div
+              key={card.label}
+              className={`glass rounded-2xl p-5 shadow-lg ${card.shadow} animate-fade-in-up transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+              style={{ animationDelay: `${i * 100}ms` }}
+            >
+              <p className="text-xs text-gray-400 dark:text-gray-500 mb-2 tracking-wider uppercase">{card.label}</p>
+              <p className={`text-2xl md:text-3xl font-extrabold bg-gradient-to-r ${card.color} bg-clip-text text-transparent`} style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>
+                {card.value}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Dream Progress Pie */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">梦想储蓄分布</h2>
+          <div className="glass rounded-2xl p-6 shadow-lg shadow-dusk-300/5 dark:shadow-dusk-900/20 animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-orange to-mint" />
+              梦想储蓄分布
+            </h2>
             {dreamProgressData.length > 0 ? (
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
@@ -97,10 +106,11 @@ export default function StatsPage() {
                   <Tooltip
                     formatter={(value: number) => `¥${value.toLocaleString()}`}
                     contentStyle={{
-                      backgroundColor: 'rgba(255,255,255,0.95)',
+                      background: 'rgba(255,255,255,0.95)',
+                      backdropFilter: 'blur(10px)',
                       borderRadius: '12px',
                       border: 'none',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                      boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                     }}
                   />
                 </PieChart>
@@ -110,8 +120,8 @@ export default function StatsPage() {
             )}
             <div className="flex flex-wrap gap-2 mt-2 justify-center">
               {dreamProgressData.map((item, i) => (
-                <div key={i} className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
+                <div key={i} className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: item.color }} />
                   {item.name}
                 </div>
               ))}
@@ -119,18 +129,21 @@ export default function StatsPage() {
           </div>
 
           {/* Dream List */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">梦想进度</h2>
+          <div className="glass rounded-2xl p-6 shadow-lg shadow-dusk-300/5 dark:shadow-dusk-900/20 animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-mint to-emerald-400" />
+              梦想进度
+            </h2>
             <div className="space-y-4">
               {dreams.map(dream => {
                 const progress = Math.round((dream.saved / dream.target) * 100)
                 return (
                   <div key={dream.id}>
-                    <div className="flex justify-between text-sm mb-1">
+                    <div className="flex justify-between text-sm mb-1.5">
                       <span className="text-gray-700 dark:text-gray-300 font-medium truncate pr-2">{dream.name}</span>
-                      <span className="text-gray-500 dark:text-gray-400 whitespace-nowrap">{progress}%</span>
+                      <span className="text-gray-500 dark:text-gray-400 whitespace-nowrap" style={{ fontFamily: '"Playfair Display", Georgia, serif' }}>{progress}%</span>
                     </div>
-                    <div className="w-full h-3 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div className="w-full h-3 bg-gray-100/80 dark:bg-dusk-800/50 rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full bg-gradient-to-r ${dream.barColor} transition-all duration-500`}
                         style={{ width: `${Math.min(progress, 100)}%` }}
@@ -146,16 +159,19 @@ export default function StatsPage() {
           </div>
 
           {/* Recent Entries */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm md:col-span-2">
-            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">最近日记</h2>
+          <div className="glass rounded-2xl p-6 shadow-lg shadow-dusk-300/5 dark:shadow-dusk-900/20 md:col-span-2 animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+            <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gradient-to-r from-amber-400 to-orange" />
+              最近日记
+            </h2>
             {recentEntries.length > 0 ? (
               <div className="space-y-3">
                 {recentEntries.map(entry => (
-                  <div key={entry.id} className="flex items-start gap-3 p-3 bg-cream dark:bg-gray-700/50 rounded-xl">
-                    <div className="w-2 h-2 rounded-full bg-orange mt-1.5 flex-shrink-0" />
+                  <div key={entry.id} className="flex items-start gap-3 p-3 bg-gradient-to-r from-orange/5 to-transparent dark:from-dusk-800/30 dark:to-transparent rounded-xl transition-all duration-200 hover:from-orange/10 dark:hover:from-dusk-700/30">
+                    <div className="w-2 h-2 rounded-full bg-gradient-to-r from-orange to-rose-400 mt-1.5 flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed">{entry.text}</p>
-                      <time className="text-xs text-gray-400 dark:text-gray-500 mt-1 block">{entry.time}</time>
+                      <time className="text-xs text-gray-400 dark:text-gray-500 mt-1 block font-light">{entry.time}</time>
                     </div>
                   </div>
                 ))}

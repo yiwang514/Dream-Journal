@@ -1,8 +1,8 @@
-export default function ThemeToggle({ theme, onToggle }) {
+export default function ThemeToggle({ theme, onToggle }: { theme: string; onToggle: () => void }) {
   return (
     <button
       onClick={onToggle}
-      className="w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 active:scale-90"
+      className="glass-subtle w-10 h-10 flex items-center justify-center rounded-full shadow-sm hover:shadow-md transition-all duration-300 active:scale-90 hover:-translate-y-0.5"
       title={theme === 'light' ? '切换到暗色模式' : '切换到亮色模式'}
     >
       {theme === 'light' ? (

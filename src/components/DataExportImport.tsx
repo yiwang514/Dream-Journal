@@ -4,8 +4,8 @@ import { loadFromStorage } from '../hooks/useLocalStorage'
 const ENTRIES_KEY = 'dream-journal-entries'
 const DREAMS_KEY = 'dream-journal-dreams'
 
-export default function DataExportImport({ onImport }) {
-  const fileInputRef = useRef(null)
+export default function DataExportImport({ onImport }: { onImport: (entries: any[], dreams: any[]) => void }) {
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleExport = () => {
     const data = {
@@ -23,14 +23,14 @@ export default function DataExportImport({ onImport }) {
     URL.revokeObjectURL(url)
   }
 
-  const handleImport = (e) => {
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
     const reader = new FileReader()
     reader.onload = (event) => {
       try {
-        const data = JSON.parse(event.target.result)
+        const data = JSON.parse(event.target?.result as string)
         if (data.entries && data.dreams) {
           onImport(data.entries, data.dreams)
         }
@@ -46,7 +46,7 @@ export default function DataExportImport({ onImport }) {
     <div className="flex items-center gap-2">
       <button
         onClick={handleExport}
-        className="px-3 py-1.5 text-xs font-semibold bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all flex items-center gap-1"
+        className="glass-subtle px-4 py-2 text-xs font-semibold text-gray-600 dark:text-gray-300 rounded-2xl hover:bg-white/60 dark:hover:bg-dusk-950/60 transition-all duration-300 flex items-center gap-1.5 shadow-sm hover:shadow-md active:scale-95"
         title="导出数据为 JSON 文件"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -58,7 +58,7 @@ export default function DataExportImport({ onImport }) {
       </button>
       <button
         onClick={() => fileInputRef.current?.click()}
-        className="px-3 py-1.5 text-xs font-semibold bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all flex items-center gap-1"
+        className="glass-subtle px-4 py-2 text-xs font-semibold text-gray-600 dark:text-gray-300 rounded-2xl hover:bg-white/60 dark:hover:bg-dusk-950/60 transition-all duration-300 flex items-center gap-1.5 shadow-sm hover:shadow-md active:scale-95"
         title="从 JSON 文件导入数据"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
