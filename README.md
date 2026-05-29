@@ -4,7 +4,7 @@
 
 **记录成长，为梦想储蓄**
 
-A personal success journal & dream savings tracker built with React + TypeScript.
+一个基于 React + TypeScript 的个人成功日记与梦想储蓄追踪器。
 
 [![Deploy](https://github.com/yiwang514/Dream-Journal/actions/workflows/deploy.yml/badge.svg)](https://github.com/yiwang514/Dream-Journal/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -16,63 +16,63 @@ A personal success journal & dream savings tracker built with React + TypeScript
 
 ---
 
-## About
+## 项目介绍
 
-Energy Space is a web app that helps you build confidence by recording small daily successes, while tracking progress toward your dreams with a visual savings goal system. All data stays in your browser — no backend, no sign-up.
+Energy Space 是一个帮助你建立自信的 Web 应用——通过记录每天的小成就来积累信心，同时用可视化的目标系统追踪梦想储蓄进度。所有数据存储在浏览器本地，无需后端，无需注册。
 
-## Features
+## 功能特性
 
-### Success Journal
+### 成功日记
 
-- Record 3 little things you succeeded at each day
-- Inline editing — click any entry to modify it
-- Undo delete via toast notifications
-- Confetti celebration on each new entry
+- 每天记录 3 件你做到的小事，无论多小
+- 支持行内编辑，点击任意条目即可修改
+- 删除后可通过 Toast 通知一键撤销
+- 每次保存新条目时触发彩纸庆祝动画
 
-### Dream Savings
+### 梦想储蓄
 
-- Create dreams with a target amount (CNY)
-- Deposit money and watch the progress bar fill up
-- Achieved dreams get a celebratory badge
-- Edit or delete dreams with undo support
+- 创建梦想并设定目标金额（人民币）
+- 存入金额，实时查看进度条变化
+- 梦想达成时展示庆祝徽章
+- 支持编辑、删除梦想，操作可撤销
 
-### Statistics Dashboard
+### 统计面板
 
-- Total entries, dream completion rate, savings overview
-- Recharts pie chart showing savings distribution
-- Per-dream progress bars
-- Recent journal entries timeline
+- 总日记数、梦想完成率、储蓄概览
+- Recharts 饼图展示各梦想的储蓄分布
+- 每个梦想的独立进度条
+- 最近 7 条日记时间线
 
-### General
+### 通用功能
 
-- **Dark / Light theme** — toggle and persisted to localStorage
-- **Data export / import** — backup and restore all data as JSON
-- **PWA support** — installable as a standalone app with offline capabilities
-- **Responsive design** — side-by-side layout on desktop, stacked on mobile
-- **Glassmorphism UI** — warm gradients, floating particles, subtle grain texture
+- **深色 / 浅色主题** — 一键切换，状态持久化到 localStorage
+- **数据导出 / 导入** — 将所有数据备份为 JSON 文件并可随时恢复
+- **PWA 支持** — 可安装为独立应用，支持离线使用
+- **响应式布局** — 桌面端双栏并排，移动端自动堆叠
+- **毛玻璃 UI** — 温暖渐变、浮动粒子、细腻颗粒纹理
 
-## Tech Stack
+## 技术栈
 
-| Category | Technology |
+| 分类 | 技术 |
 |---|---|
-| Framework | React 18 + TypeScript |
-| Build Tool | Vite 6 |
-| Routing | React Router DOM 7 |
-| Styling | Tailwind CSS 3 |
-| Charts | Recharts |
+| 框架 | React 18 + TypeScript |
+| 构建工具 | Vite 6 |
+| 路由 | React Router DOM 7 |
+| 样式 | Tailwind CSS 3 |
+| 图表 | Recharts |
 | PWA | vite-plugin-pwa (Workbox) |
-| Testing | Vitest + Testing Library |
-| Linting | ESLint 9 (flat config) + Prettier |
-| Deployment | GitHub Actions + GitHub Pages |
+| 测试 | Vitest + Testing Library |
+| 代码规范 | ESLint 9 (flat config) + Prettier |
+| 部署 | GitHub Actions + GitHub Pages |
 
-## Getting Started
+## 快速开始
 
-### Prerequisites
+### 环境要求
 
 - Node.js >= 20
 - npm
 
-### Installation
+### 安装
 
 ```bash
 git clone https://github.com/yiwang514/Dream-Journal.git
@@ -80,70 +80,70 @@ cd Dream-Journal
 npm ci
 ```
 
-### Development
+### 开发
 
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
+在浏览器中打开 `http://localhost:5173`。
 
-### Build & Preview
+### 构建与预览
 
 ```bash
 npm run build
 npm run preview
 ```
 
-### Testing
+### 测试
 
 ```bash
-npm run test          # single run
-npm run test:watch    # watch mode
+npm run test          # 单次运行
+npm run test:watch    # 监听模式
 ```
 
-### Lint & Format
+### 代码检查与格式化
 
 ```bash
-npm run lint          # check
-npm run lint:fix      # auto-fix
-npm run format        # prettier
+npm run lint          # 检查
+npm run lint:fix      # 自动修复
+npm run format        # 格式化
 ```
 
-## Project Structure
+## 项目结构
 
 ```
 src/
-├── components/          # React components
-│   ├── HomePage.tsx     # Main page with journal + dream board
-│   ├── StatsPage.tsx    # Statistics dashboard
-│   ├── SuccessJournal.tsx
-│   ├── DreamBoard.tsx
-│   ├── DreamCard.tsx
-│   ├── ThemeToggle.tsx
-│   ├── DataExportImport.tsx
+├── components/          # React 组件
+│   ├── HomePage.tsx     # 主页：日记 + 梦想面板
+│   ├── StatsPage.tsx    # 统计面板
+│   ├── SuccessJournal.tsx  # 成功日记
+│   ├── DreamBoard.tsx   # 梦想面板
+│   ├── DreamCard.tsx    # 梦想卡片
+│   ├── ThemeToggle.tsx  # 主题切换
+│   ├── DataExportImport.tsx  # 数据导入导出
 │   └── ...
-├── hooks/               # Custom React hooks
-│   ├── useEntries.ts    # Journal entries CRUD
-│   ├── useDreams.ts     # Dreams CRUD + deposit
-│   ├── useLocalStorage.ts
-│   └── useTheme.ts
-├── utils/               # Utilities
-│   └── confetti.ts      # Confetti animation
-├── __tests__/           # Unit tests
-├── types.ts             # TypeScript interfaces
-├── App.tsx              # Router setup
-└── main.tsx             # Entry point
+├── hooks/               # 自定义 Hooks
+│   ├── useEntries.ts    # 日记增删改查
+│   ├── useDreams.ts     # 梦想增删改查 + 存款
+│   ├── useLocalStorage.ts   # 本地存储
+│   └── useTheme.ts      # 主题管理
+├── utils/               # 工具函数
+│   └── confetti.ts      # 彩纸动画
+├── __tests__/           # 单元测试
+├── types.ts             # TypeScript 类型定义
+├── App.tsx              # 路由配置
+└── main.tsx             # 应用入口
 ```
 
-## Deployment
+## 部署
 
-The app is automatically deployed to GitHub Pages on every push to `main` via GitHub Actions. You can also deploy manually:
+项目通过 GitHub Actions 在每次推送到 `main` 分支时自动部署到 GitHub Pages。也可以手动部署：
 
 ```bash
 npm run deploy
 ```
 
-## License
+## 开源协议
 
 [MIT](LICENSE) &copy; 2026 [yiwang514](https://github.com/yiwang514)
